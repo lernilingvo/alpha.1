@@ -1,0 +1,24 @@
+[project]
+name = "lerni"
+version='2024.05.029.2'
+description='Python module to learn words'
+authors=[{name='Henri Le Foll',email='H@h.hh'}] 
+
+[project.scripts]
+lerni="lerni.ludi:main"
+reload="lerni.reload:main"
+#console_scripts = {vortoj="vortoj.ludo.ludi:main",aldoni="vortoj.crudo.aldoni:main"}
+
+[build-system]
+requires = ["build","setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["lerni/data"]
+
+[tool.setuptools.package-data]
+lerni = ["*.json"]
+

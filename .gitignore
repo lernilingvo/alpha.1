@@ -1,0 +1,5 @@
+__pycache__
+zautres
+.*
+*.egg-info
+*.mo
