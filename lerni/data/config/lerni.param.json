@@ -1,15 +1,6 @@
 {
 	"defaultUser" : "h"
 	,"users":[{"name":"h","defaultLanguage":"fr_ja"}]
-	,"fr_eo" : { 
-		"languages":{"learn":"eo","home":"fr"}
-		,"db" : "/0-wsl2/0-mots/0-eo.db/vortaro.simple/eo.db.sqlite3"
-		,"lessons" : {"type":"word_list","author":"H","title":"ex","alea":"False","theme":"False","num":0,"nb":0}
-		,"csvs" : [
-			{"type":"word_translation","language":"eo","translation":"fr","author":"Henri","title":"preciseco","csv" : "data/ll-ja-fr/csv/vortoPreciseco.csv"}
-			,{"type":"only_translation","language":"eo","translation":"fr","author":"wikipedia","title":"100","csv" : "data/ll-ja-fr/csv/trad100.eo.csv"}
-			,{"type":"word_list","language":"eo","translation":"fr","author":"H","title":"ex","csv" : "/home/h/ex.csv"}
-			]}
 	,"fr_ja" : { 
 		"languages":{"learn":"ja","home":"fr"}
 		,"db" : "data/ll-ja-fr/ja.db.sqlite3"
