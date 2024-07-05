@@ -11,7 +11,7 @@
 
 ## Tester l’installation de visual Studio Code et de python
 ### 1. ouvrir un terminal pouvant afficher des caractères japonais :
-* double-cliquer sur wConsole.bat
+* Pour ouvrir vs code, double-cliquez sur wConsole.bat
 * Pour ouvrir le terminal, dans le menu choisissez : ```view``` puis ```terminal```
 * Pour vérifier que vous êtes bien dans le bon dossier tapez la commande : ```ls```
 * dans la liste vous devez voir reload.py et ludi.py
