@@ -14,7 +14,7 @@
 * ouvrez Visual studio Code
 * ouvrez un terminal dans Visual studio Code
 * Dans l’explorateur windows copiez le chemin du dossier où se trouve le fichier ludi.py
-* Dans le terminal de Visual studio code coller le chemin après "cd " : 
+* Dans le terminal de Visual studio code coller le chemin après "cd " :  \
   ```cd <chemin>```
 
 ### 2. initialiser des données à partir des fichiers de paramétrage
