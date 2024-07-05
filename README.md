@@ -15,15 +15,15 @@
 * ouvrez un terminal dans Visual studio Code
 * Dans l’explorateur windows copiez le chemin du dossier où se trouve le fichier ludi.py
 * Dans le terminal de Visual studio code coller le chemin après "cd "
-  cd <chemin>
+  ```cd <chemin>```
 
 ### 2. initialiser des données à partir des fichiers de paramétrage
 * chargez la base de données 
- python reload.py reset
+ ```python reload.py reset```
 
 ### 3. réviser le vocabulaire
 * exécuter le programme
- python ludi.py
+ ```python ludi.py```
 * pour quitter le programme taper : $
 
 ### ATTENTION :
