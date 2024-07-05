@@ -9,13 +9,19 @@
 * cliquez sur HTTPS puis Download ZIP
 * Décompressez l’archive
 
+## Tester l’installation de visual Studio Code et de python
+### 1. ouvrir un terminal pouvant afficher des caractères japonais :
+* double-cliquer sur wConsole.bat
+* Pour vérifier que vous êtes bien dans le bon dossier tapez la commande : ```ls```
+* dans la liste vous devez voir reload.py et ludi.py
+
+### 2. contrôler que python est bien installé : 
+* dans ce même terminal tapez la commande : ```python```
+* puis  ```>>>exit()```
+
 ## Utilisation
 ### 1. ouvrir un terminal pouvant afficher des caractères japonais :
-* ouvrez Visual studio Code
-* ouvrez un terminal dans Visual studio Code
-* Dans l’explorateur windows copiez le chemin du dossier où se trouve le fichier ludi.py
-* Dans le terminal de Visual studio code coller le chemin après "cd " :  \
-  ```cd <chemin>```
+* double-cliquer sur wConsole.bat
 
 ### 2. initialiser des données à partir des fichiers de paramétrage
 * chargez la base de données  : \
