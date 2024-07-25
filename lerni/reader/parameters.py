@@ -24,7 +24,7 @@ class Parameters(Param):
 
 		super().__init__(dic_)
 		self.initI18n()
-		model = "data/config/lerni.model.json"
+		model = "data/config/model.lerni.json"
 		self._model = Model(self._debug,model)
 
 #-

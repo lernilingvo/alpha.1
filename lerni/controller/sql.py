@@ -22,6 +22,9 @@ class Sql:
 
 		self._param = param_
 		self._debug = param_["debugFile"]
+		self._file = "controller/sql.py"
+		self._function = "__init__"
+		self._boucle = "."
 
 		self.printIf()
 		self.printIf(self._param)
@@ -52,11 +55,17 @@ class Sql:
 		except Exception as ex:
 			print(" PB de connexion à la base ")
 
+
+	def printDeb(self,signoj_,array_=[]):
+		self.printIf()
+		for el in array_:
+			self.printIf(" "+str(signoj_) + " : " + str(el))
+		self.printIf()
+
 	def printIf(self,signoj_=""):
 		if self._param["debug"]:
-			print(file=self._debug)
-			print(" "+str(signoj_),file=self._debug)
-			print(file=self._debug)
+			print(self._boucle+self._file+" "+self._function + " "+str(signoj_) , file=self._debug)
+
 
 
 	def getKey(self,table_,where_=""):

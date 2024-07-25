@@ -96,6 +96,7 @@ def main():
 
 	if  parser._args.debug:
 
+		os.system("mv debug_* sos")
 		vNow = datetime.datetime.now()
 		vTmp = str(vNow.year) + "." + str(vNow.month).zfill(2) + "." + str(vNow.day).zfill(2)
 		vTmp += "_" + str(vNow.hour).zfill(2) + "." + str(vNow.minute).zfill(2) + "." + str(vNow.second).zfill(2)

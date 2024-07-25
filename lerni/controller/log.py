@@ -24,6 +24,9 @@ class Log(Sql):
 
 		super().__init__(param_)
 
+		self._file = "log.py"
+		self._function = "__init__"
+
 
 #-
 

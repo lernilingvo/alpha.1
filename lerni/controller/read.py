@@ -13,20 +13,23 @@ __email__ = "lerni@gmail.com"
 __status__ = "Prototype"
 
 #self.addAro #créer des objets Book, translationBook...
-import csv,os,sys
+import argparse,csv,os,sys
 import gettext,json
 from .sql import Sql
 from .book import Book
 from .translation import Translation
 
 
-class Reload(Sql):
+class Read(Sql):
 
 	def __init__(self , conf_):
 
-		self._conf = conf_
+		super().__init__(conf_.param())
 
-		super().__init__(self._conf.param())
+		self._file = "read.py"
+		self._function = "__init__"
+
+		self._conf = conf_
 
 		print()
 
@@ -73,7 +76,7 @@ class Reload(Sql):
 
 		match book_["type"]:
 
-			case "word_translation"|"radical_translation"|"only_translation":
+			case "word_translation_ordered"|"radical_translation"|"word_translation_minimal":
 				return Translation(self._param,book_,self._conf.getStructure(book_["type"]))
 
 			case "word_list"|"radical_decomposition":

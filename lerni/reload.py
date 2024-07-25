@@ -12,24 +12,31 @@ __maintainer__ = "Henri Le Foll"
 __email__ = "lerni@gmail.com"
 __status__ = "Prototype"
 
-import argparse,sys
+import argparse,datetime,os,sys
 from reader.parameters import Parameters
-from controller.reload import Reload
+from controller.read import Read
 from controller.book import Book
 
 class Parser():
 
 	def __init__(self):
 
-		parser = argparse.ArgumentParser(description="reload the init files")
+		self._liste = ["--help","debug","delete","drop","reset"]
+		parser = argparse.ArgumentParser(description="read the init files")
 		#parser.add_argument("--reset",action="store_true",help="delete everything")
 		subparsers = parser.add_subparsers(dest = "command")
+		debug = subparsers.add_parser("debug" , help = "debug in file")
 		drop = subparsers.add_parser("drop" , help = "delete everything")
-		reset = subparsers.add_parser("reset" , help = "delete everything and reload")
+		reset = subparsers.add_parser("reset" , help = "delete everything and read")
 		delete = subparsers.add_parser("delete" , help = "delete a book")
 		delete.add_argument("-a","--author" , type = str , required = True , help = "name of the author")
 		delete.add_argument("-t","--title" , type = str , required = True , help = "title of the book")
 		self._args = parser.parse_args()
+
+		if not self._args.command in self._liste:
+			print(" il faut passer un argument parmi : "+str(self._liste))
+			print()
+			exit()
 		
 
 def main():
@@ -39,26 +46,43 @@ def main():
 	print()
 
 	conf =  Parameters({"debug":False,"debugFile":None})
-	reload = Reload(conf)
+	read = Read(conf)
+	param = conf.param()
+	param["debug"] = False
 
 	parser = Parser()
 
 	if parser._args.command in ["drop","reset"]:
 		print("reset complet")
-		reload.deleteTables(True)
+		read.deleteTables(True)
+
+	if parser._args.command == "debug":
+		os.system("mv debug_* sos")
+		vNow = datetime.datetime.now()
+		vTmp = str(vNow.year) + "." + str(vNow.month).zfill(2) + "." + str(vNow.day).zfill(2)
+		vTmp += "_" + str(vNow.hour).zfill(2) + "." + str(vNow.minute).zfill(2) + "." + str(vNow.second).zfill(2)
+		debugFilename = os.getcwd() + "/debug_" + vTmp + ".log"
+
+		f = open(debugFilename, 'w+')
+
+		print()
+		print(debugFilename)
+		print()
+		print(param,file=f)
+		param["debugFile"]=f
+		param["debug"] = True
 
 	if parser._args.command == "delete":
-		param = conf.param()
 		param["author"] = parser._args.author
 		param["title"] = parser._args.title
 		aBook = Book(param,param)
 		aBook.setKey()
 		aBook.delete()
-		reload.loadFiles()
+		read.loadFiles()
 		exit()
 
 	if parser._args.command not in ["drop"]:
-		reload.loadFiles()
+		read.loadFiles()
 
 	print()
 	print(" Fin")

@@ -288,7 +288,7 @@ class Vocabulary(Sql):
 
 	def extract(self,type_,tab_):
 
-		if type_ == "word_list":
+		if type_ in ["word_list","radikal_list"]:
 			self.printIf(tab_)
 			return tab_
 		elif 1 == 0:#plus tard (concatener les radicaux)

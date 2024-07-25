@@ -23,12 +23,16 @@ class Translation(Book):
 
 		super().__init__(param_,book_)
 
+		self._file = "translation.py"
+		self._function = "__init__"
+
 		self._structure = structure_
 
 		# récupérer l’id
 
 	def read(self):
 
+		self._function = "read"
 		self.printIf("#-")
 		self.printIf("readTranslation : " + self._book["type"])
 		data = self.getData()
@@ -44,53 +48,81 @@ class Translation(Book):
 
 		for self._line in data:
 
+			self._boucle = " # ."
 			vNum +=1
+			self.printIf("translation.py # read avant boucle  - line : " + str(self._line))
 
 			for vDescription in self._structure:
 
-				vApp = vDescription["app"]
-				vTable =  vDescription["table"]
-				self._array = []
-				self._pozicio = "0"
-				self._increment = 0
+				self._boucle = " # # ."
 				self.printIf()
-				self.printIf()
-				self.printIf()
-				self.printIf(self._book["type"])
-				self.printIf()
-				self.printIf(vDescription["data"])
-				
+				self.printIf("translation.py ## read avant boucle : " +str (vDescription["data"][0]))
+				self._continuer = True
+				self._continuerInc = 0
 
-				for  aData in vDescription["data"]:
+				if "positions" in vDescription["data"][0].keys():
+					self._roots =  self._line[0].split(",")
 
-					self.printIf()
-					self.printIf("aData : " + str(aData))
-					self.printIf("avant array : "+str(self._array))
-					self.readData(aData,vApp,vTable)
-					self.printIf("après array : "+str(self._array))
 
-				aColumnName = "vortarLibrejo_id"
+				while self._continuer:
 
-				match self._book["type"]:
-					case "word_list":
-						aColumnName = "vortuLibre_id"
-					case "radical_decomposition":
-						aColumnName = "vortuLibre_id"
-						exit()
+					vApp = vDescription["app"]
+					vTable =  vDescription["table"]
+					self._array = []
+					self._pozicio = "0"
+					self._increment = 0
+					self.printIf("translation.py ## read avant boucle : " +str (vDescription["data"]))
+
+					for  aData in vDescription["data"]:
+						self._boucle = " # # # # ."
+						self.printIf()
+						self.printIf("translation.py - read - aData : " + str(aData))
+						self.printIf("translation.py - read - avant readData_ : "+str(self._array))
+						self._function = "readData"
+						self.readData(aData,vApp,vTable)
+						self._function = "read"
+						self.printIf("translation.py ### read - après readData_ fin boucle : "+str(self._array))
+
+					if "positions" in vDescription["data"][0].keys():
+						self._continuerInc += 1
+						self._continuer = self._continuerInc <= len(self._roots) - 1
+					else:
+						self._continuer = False
+
+					self._boucle = " # # # ."
+					self._increment += 1
+
+					match self._book["type"]:
+						case "word_list":
+							aColumnName = "vortuLibre_id"
+							self._array.append({"select":aColumnName,"value":str(self._book["bookId"])})
+						case "word_translation_ordered"|"word_translation_minimal":
+							aColumnName = "vortarLibrejo_id"
+							self._array.append({"select":aColumnName,"value":str(self._book["bookId"])})
+						case "radical_decomposition":
+							pass
+						case _:
+							print()
+							print("translation.py case - " + self._book["type"] + " : not known yet")
+							print()
+							exit()
+						#case "radical_decomposition":
+						#	aColumnName = "vortuLibre_id"
+						#	exit()
+					
 
 	
-				self._array.append({"select":aColumnName,"value":str(self._book["bookId"])})
-				vInfo = {"app":vApp,"table":vTable,"request":self._array}
-				self.printIf("----")
-				self.printIf(vInfo)
-				self.printIf("----")
-				vKey,isAdded = self.add(vInfo)
+					vInfo = {"app":vApp,"table":vTable,"request":self._array}
+					self.printIf("----")
+					self.printIf(vInfo)
+					self.printIf("----")
+					vKey,isAdded = self.add(vInfo)
+					self.printIf("---- fin boucle ")
 
 
 	def readData(self,desc_,app_,table_):
 
 		xDic = {}
-		self._increment += 1
 
 		if "table" in desc_.keys():
 			table_ = desc_["table"]
@@ -105,19 +137,23 @@ class Translation(Book):
 			vPosition = desc_["position"]
 
 			self.printIf()
-			self.printIf(self._line)
+			self.printIf("translation.py - readData_ : " + str(self._line))
 			self.printIf(vPosition)
 			self.printIf()
 			vLu = self._line[vPosition]
 
 		if "increment" in desc_.keys():
-			vLu = str(self._increment)
-			self.printIf("ICI  vLu = "+str(vLu))
+			vLu = str(self._continuerInc)
+
+		if "concatenation" in desc_.keys():
+			vLu = ""
+			for vRoot in  self._roots:
+				vLu += vRoot
 
 		if "positions" in desc_.keys():
-			vLu = ""
-			for vPosition in  desc_["positions"]:
-				vLu += self._line[vPosition]
+			vLu = self._roots[self._continuerInc]
+			self.printIf("ICI positions" + vLu)
+			#self._continuer = self._continuerInc == len(self._roots)
 
 		if "subData" in desc_.keys():
 			for sub in desc_["subData"]:
@@ -130,7 +166,7 @@ class Translation(Book):
 					}
 
 			xKey,isAdded = self.add(xInfo)
-			self.printIf(" xKey : " + str(xKey))
+			self.printIf(" translation.py - readData_ - xKey : " + str(xKey))
 
 		if "end" in desc_.keys():
 			xDic["select"] = desc_["field"]
@@ -147,7 +183,7 @@ class Translation(Book):
 			xInfo = {"app":d["app"],"table":d["table"],"request":[
 					{"select":d["field"],"value":vLu.replace("'","’")}]
 					}
-			self.printIf("xInfo : " + str(xInfo))
+			self.printIf("translation.py - readData_ - xInfo : " + str(xInfo))
 			xKey,isAdded = self.add(xInfo)
 			xDic["select"] = desc_["field"]
 			xDic["value"] = xKey

@@ -20,7 +20,7 @@ class Param(Read):
 
 	def __init__(self ,dic_):
 
-		self._paramName =  "data/config/lerni.param.json"
+		self._paramName =  "data/config/param.lerni.json"
 		super().__init__(self._paramName,dic_["debug"],dic_["debugFile"])
 		self.initParam(dic_)
 

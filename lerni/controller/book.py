@@ -26,10 +26,16 @@ class Book(Sql):
 
 		super().__init__(param_)
 
+		self._file = "book.py"
+		self._function = "__init__"
+
 		self._book = book_
 
 
 	def save(self):
+
+		if self._book["type"] == "radical_decomposition":
+			return 0,False
 
 		vInfo = {"app":"komuno","table":"autoro","request":[
 			{"select":"nomo","value":self._book["author"],"type":"string"}
@@ -82,10 +88,28 @@ class Book(Sql):
 		self.printIf("------")
 
 	def read(self,select_):
-		self.setKey()
-		aTable = "l" + self._param["learn"] + "_vortujo"
+		if "csv" in self._param.keys():
+			data = self.getData()
+			num = 0
+			ret_all = "("
+			for aLine in data:
+				if num != 0:
+					ret_all +=","
+				ret_all += '"' + aLine[0]+'"'
+				num += 1
+			ret_all += ")"
+			aTable = "l" + self._param["learn"] + "_radikopo"
+			print(ret_all)
+			print ("csv : " + self._param["csv"])
+			aSelect = "radikopoVorto_id" 
+			aWhere = "radikopoRadiko_id in " + ret_all
+		else:
+			self.setKey()
+			aTable = "l" + self._param["learn"] + "_vortujo"
+			aSelect = select_
+			aWhere = "vortuLibre_id = " +  str(self._book["bookId"])
 		self.printIf(aTable)
-		reqBook = {"table":aTable,"select":select_,"where":"vortuLibre_id = " +  str(self._book["bookId"])}
+		reqBook = {"table":aTable,"select":aSelect,"where":aWhere}
 		return  self.select(reqBook)
 
 	def delete(self):
