@@ -1,0 +1,90 @@
+{
+	"param":[
+			{"name":"default","type":"key"}
+			,{"name":"lingvo","type":"array","values":[
+				{"name":"db","type":"key"},
+				{"name":"files","type":"array","values":[
+					{"name":"type","type":"key"}
+					,{"name":"author","type":"key"}
+					,{"name":"title","type":"key"}
+					,{"name":"csv","type":"key"}
+				]}
+			]}
+		]
+	,"eo" : { 
+		"model":[
+			{"name":"komuno","tables":["autoro","pozicio","titro","librejo"]},
+			{"name":"leo","tables":["fikso","traduko","vorto","radikejo","radikopo","vortujo"]}
+			,{"name":"lfr","tables":["vorto"]}
+			,{"name":"teofr","tables":["vortaro"]}
+			,{"name":"logs","tables":["log","leciono","parametro"]}
+			]
+		,"tables":[
+			{"name":"komuno_autoro","tables":["autoro","pozicio","titro","librejo"]}
+			,{"name":"komuno_titro","tables":["autoro","pozicio","titro","librejo"]}
+			,{"name":"komuno_librejo","tables":["autoro","pozicio","titro","librejo"]}
+			,{"name":"leo","tables":["fikso","traduko","vorto","radikejo","radikopo","vortujo"]}
+			,{"name":"lfr","tables":["vorto"]}
+			,{"name":"teofr","tables":["vortaro"]}
+			,{"name":"logs","tables":["log","leciono","parametro"]}
+			]
+		}
+	,"ja" : { 
+		"model":[
+			{"name":"komuno","tables":["autoro","pozicio","titro","librejo"]},
+			{"name":"lja","tables":["fikso","traduko","vorto","radikejo","radikopo","vortujo"]}
+			,{"name":"lfr","tables":["vorto"]}
+			,{"name":"tjafr","tables":["vortaro"]}
+			,{"name":"logs","tables":["log","leciono","parametro"]}
+			]
+	,"logoj" : [ "logs_log"]
+	}
+	,"jab" : { 
+		"tabeloj" : [ "komuno_autoro","komuno_pozicio","komuno_titro",
+			"komuno_librejo",
+			"lja_fikso","lja_litero","lja_prononco","lja_traduko", "lja_vorto",
+			"lja_alfabetejo","lja_radikejo","lja_radikopo",
+			"lja_vortujo"]
+	}
+	
+	,"fileType":{
+			"radical_translation":
+				{"app":"translation","table":"vortaro","data":[
+					 {"position":0,"field":"vortarPozicio_id","key":{"app":"komuno","table":"pozicio","field":"nomo"}}
+					,{"positions":[1,2],"field":"vortarVorto_id","key":{"app":"learn","table":"vorto","field":"nomo"}}
+					,{"position":3,"field":"vortarTraduko_id","key":{"app":"home","table":"vorto","field":"nomo"}}
+					,{"position":4,"field":"vortarPrecizeco","end":"True"}
+					,{"position":5,"field":"vortarKomento","end":"True"}
+				]}
+			,"only_translation":
+				{"app":"translation","table":"vortaro","data":[
+					 {"increment":"True","field":"vortarPozicio_id","key":{"app":"komuno","table":"pozicio","field":"nomo"}}
+					 ,{"position":0,"field":"vortarVorto_id","key":{"app":"learn","table":"vorto","field":"nomo"}}
+					,{"position":1,"field":"vortarTraduko_id","key":{"app":"home","table":"vorto","field":"nomo"}}
+				]}
+			,"word_translation_ordered":
+				{"app":"translation","table":"vortaro","data":[
+					 {"position":0,"field":"vortarPozicio_id","key":{"app":"komuno","table":"pozicio","field":"nomo"}}
+					,{"position":1,"field":"vortarVorto_id","key":{"app":"learn","table":"vorto","field":"nomo"}}
+					,{"position":2,"field":"vortarTraduko_id","key":{"app":"home","table":"vorto","field":"nomo"}}
+					,{"position":3,"field":"vortarPrecizeco","end":"True"}
+					,{"position":4,"field":"vortarKomento","end":"True"}
+				]}
+			,"radical_decomposition":
+				{"app":"learn","table":"radikopo","data":[
+					 {"positions":"True","field":"radikopoRadiko_id","key":{"app":"learn","table":"radikejo","field":"nomo"}}
+					 ,{"positions":"True","field":"radikopoVorto_id","key":{"app":"learn","table":"vorto","field":"nomo"}}
+					 ,{"increment":"True","field":"radikopoPozicio_id","key":{"app":"komuno","table":"pozicio","field":"nomo"}}
+			]}
+			,"radical_list":
+				{"app":"learn","table":"vortujo","data":[
+					 {"increment":"True","field":"vortuPozicio_id","key":{"app":"komuno","table":"pozicio","field":"nomo"}}
+					 ,{"position":0,"field":"vortuVorto_id","key":{"app":"learn","table":"vorto","field":"nomo"}}
+			]}
+			,"word_list":
+				{"app":"learn","table":"vortujo","data":[
+					 {"increment":"True","field":"vortuPozicio_id","key":{"app":"komuno","table":"pozicio","field":"nomo"}}
+					 ,{"position":0,"field":"vortuVorto_id","key":{"app":"learn","table":"vorto","field":"nomo"}}
+			]}
+	}
+}

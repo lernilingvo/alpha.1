@@ -48,15 +48,15 @@ class Translation(Book):
 
 		for self._line in data:
 
-			self._boucle = " # ."
-			vNum +=1
-			self.printIf("translation.py # read avant boucle  - line : " + str(self._line))
+				self._boucle = " # ."
+				vNum +=1
+				self.printIf("translation.py # read avant boucle  - line : " + str(self._line))
 
-			for vDescription in self._structure:
+				vDescription = self._structure
 
 				self._boucle = " # # ."
 				self.printIf()
-				self.printIf("translation.py ## read avant boucle : " +str (vDescription["data"][0]))
+				self.printIf("translation.py ## read avant boucle : " +str (vDescription))
 				self._continuer = True
 				self._continuerInc = 0
 

@@ -1,0 +1,14 @@
+{
+	"defaultUser" : "h"
+	,"users":[{"name":"h","defaultLanguage":"fr_eo"}]
+	,"fr_eo" : { 
+		"languages":{"learn":"eo","home":"fr"}
+		,"db" : "data/tests/eo.db.sqlite3"
+		,"lessons" : {"type":"radikal_list","csv":"/home/h/rad.csv","author":"H","title":"rad","alea":"False","theme":"False","num":0,"nb":0}
+		,"csvs" : [
+			{"type":"word_translation_ordered","language":"eo","translation":"fr","author":"Henri","title":"kompleto"
+				,"csv" : "data/tests/min/vortoj.eo.csv"}
+			,{"type":"radical_decomposition","language":"eo","translation":"fr","csv" : "data/tests/min/radikoj.eo.csv"}
+			,{"type":"word_list","language":"eo","translation":"fr","author":"H","title":"ex","csv" : "/home/h/ex.csv"}
+			]}
+}
