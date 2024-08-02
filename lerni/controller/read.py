@@ -77,10 +77,10 @@ class Read(Sql):
 		match book_["type"]:
 
 			case "word_translation_ordered"|"radical_translation"|"word_translation_minimal":
-				return Translation(self._param,book_,self._conf.getStructure(book_["type"]))
+				return Translation(self._param,book_,self._conf)
 
 			case "word_list"|"radical_decomposition":
-				return Translation(self._param,book_,self._conf.getStructure(book_["type"]))
+				return Translation(self._param,book_,self._conf)
  
 		print("Book type not known : " + book_["type"])
 		exit()

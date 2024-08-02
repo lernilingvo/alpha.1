@@ -66,12 +66,18 @@ class Parameters(Param):
 	def getM(self,param_):
 		return self._model[param_]
 
-	#def getType(self,key_):
 	def getStructure(self,key_):
 		dic = self._model.get(self._default)
-		#types = dic["fileType"]
 		types = self._model.get("fileType")
 		ret = types[key_]
 
 		return types[key_]
+
+	
+
+	def getDetails(self):
+		dic = self._model.get(self._default)
+		types = self._model.get("keyDetail")
+
+		return types
 

@@ -19,14 +19,15 @@ from .book import Book
 
 class Translation(Book):
 
-	def __init__(self , param_,book_,structure_):
+	def __init__(self , param_,book_,conf_):
 
 		super().__init__(param_,book_)
 
 		self._file = "translation.py"
 		self._function = "__init__"
 
-		self._structure = structure_
+		self._structure = conf_.getStructure(book_["type"])
+		self._details = conf_.getDetails()
 
 		# récupérer l’id
 
@@ -60,9 +61,6 @@ class Translation(Book):
 				self._continuer = True
 				self._continuerInc = 0
 
-				if "positions" in vDescription["data"][0].keys():
-					self._roots =  self._line[0].split(",")
-
 
 				while self._continuer:
 
@@ -71,19 +69,22 @@ class Translation(Book):
 					self._array = []
 					self._pozicio = "0"
 					self._increment = 0
-					self.printIf("translation.py ## read avant boucle : " +str (vDescription["data"]))
+					self.printIf("translation.py ## read avant boucle - vDesc: " +str (vDescription["data"]))
 
 					for  aData in vDescription["data"]:
+
+						if aData["position"] == "array":
+							self._roots =  self._line[0].split(",")
+							self.printIf("translation.py -- roots : " +str (self._roots))
 						self._boucle = " # # # # ."
 						self.printIf()
 						self.printIf("translation.py - read - aData : " + str(aData))
 						self.printIf("translation.py - read - avant readData_ : "+str(self._array))
-						self._function = "readData"
 						self.readData(aData,vApp,vTable)
 						self._function = "read"
-						self.printIf("translation.py ### read - après readData_ fin boucle : "+str(self._array))
+						self.printIf("translation.py ### read - après readData_ fin boucle : position " + str(aData["position"]))
 
-					if "positions" in vDescription["data"][0].keys():
+					if aData["position"] == "array":
 						self._continuerInc += 1
 						self._continuer = self._continuerInc <= len(self._roots) - 1
 					else:
@@ -122,19 +123,17 @@ class Translation(Book):
 
 	def readData(self,desc_,app_,table_):
 
+		self._function = "readData"
+		self.printIf("---- "+str(desc_))
+
 		xDic = {}
+		vField = desc_["field"]
+		vPosition = desc_["position"]
+		vDetails = self._details[vField]
+		self.printIf("----+" + str(vDetails))
 
-		if "table" in desc_.keys():
-			table_ = desc_["table"]
 
-		if "app" in desc_.keys():
-			app_ = desc_["app"]
-
-		if "field" in desc_.keys():
-			vField = desc_["field"]
-
-		if "position" in desc_.keys():
-			vPosition = desc_["position"]
+		if vPosition in [0,1,2,3,4,5,6,7,8,9]:
 
 			self.printIf()
 			self.printIf("translation.py - readData_ : " + str(self._line))
@@ -142,43 +141,31 @@ class Translation(Book):
 			self.printIf()
 			vLu = self._line[vPosition]
 
-		if "increment" in desc_.keys():
+		if vPosition == "increment":
 			vLu = str(self._continuerInc)
 
-		if "concatenation" in desc_.keys():
+		if vPosition == "concatenation":
 			vLu = ""
 			for vRoot in  self._roots:
 				vLu += vRoot
 
-		if "positions" in desc_.keys():
+		if vPosition == "array":
 			vLu = self._roots[self._continuerInc]
 			self.printIf("ICI positions" + vLu)
 			#self._continuer = self._continuerInc == len(self._roots)
 
-		if "subData" in desc_.keys():
-			for sub in desc_["subData"]:
-				self.readData(sub,app_,table_)
-						
-		if "complete" in desc_.keys():
+			
 
-			xInfo = {"app":app_,"table":table_,"request":[
-					{"select":vField,"value":vLu.replace("'","’")}]
-					}
-
-			xKey,isAdded = self.add(xInfo)
-			self.printIf(" translation.py - readData_ - xKey : " + str(xKey))
-
-		if "end" in desc_.keys():
+		if vDetails == "end" :
 			xDic["select"] = desc_["field"]
 			xDic["value"] = vLu.replace("'","’")
 			self._array.append(xDic)
 
 			self.printIf("####### : "  + str(desc_))
 			
-			
 
-		if "key" in desc_.keys():
-			d = desc_["key"]
+		if isinstance(vDetails, dict):
+			d = vDetails
 			self.printIf("d = "+str(d))
 			xInfo = {"app":d["app"],"table":d["table"],"request":[
 					{"select":d["field"],"value":vLu.replace("'","’")}]
