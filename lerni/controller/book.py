@@ -25,15 +25,15 @@ class Book(Sql):
 		""" book_ must be a dictionnary with two keys : author and title """
 
 		super().__init__(param_)
-
-		self._file = "book.py"
-		self._function = "__init__"
+		self.initF("controller/book.py","__init__")
 
 		self._book = book_
+		self.restoreF()
 
 
 	def save(self):
 
+		self.initF("controller/book.py","save")
 		if self._book["type"] == "radical_decomposition":
 			return 0,False
 
@@ -58,6 +58,7 @@ class Book(Sql):
 		vKey,isAdded =  self.add(vInfo)
 
 		self._book["bookId"] = vKey
+		self.restoreF()
 
 		return vKey,isAdded
 
@@ -65,6 +66,7 @@ class Book(Sql):
 
 	def getData(self):
 
+		self.initF("controller/book.py","getData")
 		self.printIf("readBook : " + self._book["csv"])
 		self.printIf()
 
@@ -76,18 +78,27 @@ class Book(Sql):
 			raw = file.read().splitlines()
 			data = csv.reader(raw, delimiter=';') #, quotechar='|')
 
+		self.restoreF()
+
 		return data
 		
 
 	def setKey(self):
+
+		self.initF("controller/book.py","setKey")
 		aRequete = ' libreAutoro_id = "' + self._book["author"] + '" AND libreTitro_id = "' + self._book["title"] +'"'
 		self._book["bookId"] = self.getKey("komuno_librejo",aRequete)		
 
 		self.printIf("------")
 		self.printIf(self._book["bookId"])
 		self.printIf("------")
+		self.restoreF()
+
+#-
 
 	def read(self,select_):
+
+		self.initF("controller/book.py","read")
 		if "csv" in self._param.keys():
 			data = self.getData()
 			num = 0
@@ -110,7 +121,11 @@ class Book(Sql):
 			aWhere = "vortuLibre_id = " +  str(self._book["bookId"])
 		self.printIf(aTable)
 		reqBook = {"table":aTable,"select":aSelect,"where":aWhere}
-		return  self.select(reqBook)
+		self.printIf("avant : "+str(reqBook))
+		ret  =  self.select(reqBook)
+		self.printIf(ret)
+		self.restoreF()
+		return  ret
 
 	def delete(self):
 		aRequest = "delete from " + self._appt +"_vortaro WHERE vortarLibrejo_id = " + str(self._book["bookId"])		

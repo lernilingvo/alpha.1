@@ -7,8 +7,10 @@
 		,"lessons" : {"type":"radikal_list","csv":"/home/h/rad.csv","author":"H","title":"rad","alea":"False","theme":"False","num":0,"nb":0}
 		,"csvs" : [
 			{"type":"word_translation_ordered","language":"eo","translation":"fr","author":"Henri","title":"kompleto"
-				,"csv" : "data/tests/min/vortoj.eo.csv"}
-			,{"type":"radical_decomposition","language":"eo","translation":"fr","csv" : "data/tests/min/radikoj.eo.csv"}
+				,"csv" : "data/tests/csv/kpt/cio.vortoj.eo.csv"}
+			,{"type":"radical_list_ordered","language":"eo","translation":"fr","author":"Henri","title":"facila"
+				,"csv" : "data/tests/csv/facila.radikoj.uea.csv"}
+			,{"type":"radical_decomposition","language":"eo","translation":"fr","csv" : "data/tests/csv/kpt/all.radikoj.eo.csv"}
 			,{"type":"word_list","language":"eo","translation":"fr","author":"H","title":"ex","csv" : "/home/h/ex.csv"}
 			]}
 }

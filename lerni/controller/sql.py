@@ -33,13 +33,27 @@ class Sql:
 		vLanguages = param_["languages"]
 		self._param["learn"] = vLanguages["learn"]
 		self._param["home"] = vLanguages["home"]
+
 		if "LOG" in os.environ:
 			self._log = os.environ["LOG"]
 		else:
 			self._log = "False"
+
 		self._language = vLanguages["learn"]
 		self._db = param_["db"]
 		self.initDB()
+
+	def initF(self,file_,function_):
+
+		self._beforeFile = self._file
+		self._beforeFunction = self._function
+		self._file = file_
+		self._function = function_
+
+	def restoreF(self):
+		self._file = self._beforeFile
+		self._function = self._beforeFunction
+	
 
 	def initDB(self):
 
@@ -64,7 +78,7 @@ class Sql:
 
 	def printIf(self,signoj_=""):
 		if self._param["debug"]:
-			print(self._boucle+self._file+" "+self._function + " "+str(signoj_) , file=self._debug)
+			print(self._boucle + self._file + " " + self._function + "() "+str(signoj_) , file=self._debug)
 
 
 
@@ -229,6 +243,7 @@ class Sql:
 
 	def select(self,info_,concat_=True):	
 	
+		self.initF("controller/sql.py","select")
 		tab = []
 
 		aRequest = " SELECT " + info_["select"]
@@ -252,6 +267,7 @@ class Sql:
 			for aRow in self._cur.execute(aRequest):
 				tab.append(aRow)
 		
+		self.restoreF()
 		return tab
 
 		#nb = 0
@@ -263,10 +279,12 @@ class Sql:
 
 	def clear(self):
 
+		self.initF("controller/sql.py","clear")
 		print(sys.platform.startswith('win'))
 
 		if sys.platform.startswith('win'):
 			os.system("cls")	
 		else:
 			os.system("clear")	
+		self.restoreF()
 

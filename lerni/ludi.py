@@ -119,6 +119,7 @@ def main():
 	param["languages"] = conf.get("languages")
 
 	if  parser._args.debug:
+		param["debug"]=f
 		print(file=f)
 		print(param,file=f)
 		print("param : " + str(param),file=f)

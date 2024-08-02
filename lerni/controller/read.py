@@ -79,8 +79,8 @@ class Read(Sql):
 			case "word_translation_ordered"|"radical_translation"|"word_translation_minimal":
 				return Translation(self._param,book_,self._conf)
 
-			case "word_list"|"radical_decomposition":
+			case "word_list"|"radical_decomposition"|"radical_list_ordered":
 				return Translation(self._param,book_,self._conf)
  
-		print("Book type not known : " + book_["type"])
+		print("controller/read.py - Book type not known : " + book_["type"])
 		exit()

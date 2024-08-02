@@ -25,6 +25,8 @@ class Vocabulary(Sql):
 
 		super().__init__(param_)
 
+		self.initF("game/vocabulary.py","__init__")
+
 		self._log = Log(param_)
 		self._lesson = Book(self._param,self._param)
 
@@ -68,6 +70,9 @@ class Vocabulary(Sql):
 
 		self.setVocabulary()
 
+		self._before = self._function
+		self._function = self._before
+
 
 	def save(self,selection_):
 		self._log.save(selection_)
@@ -76,7 +81,8 @@ class Vocabulary(Sql):
 #-
 
 	def setVocabulary(self):
-
+		
+		self.initF("game/vocabulary.py","setVocabulary")
 		#self._param["theme"] = True
 		self.clear()
 		self.printIf("setVocabulary begin")
@@ -85,8 +91,9 @@ class Vocabulary(Sql):
 		if self._lesson._book["type"] == "radical_decomposition":
 			aSelect = "*"
 
+		self.printIf("avant : ")
 		self._allWords = self._lesson.read(aSelect)
-		self.printIf(self._allWords)
+		self.printIf("allWords : "+str(self._allWords))
 		isBreak = False
 		self._listEx =[]
 
@@ -129,6 +136,7 @@ class Vocabulary(Sql):
 			self.printIf(" Well done")
 			self.printIf()
 		#exit()
+		self.restoreF()
 
 #-
 
@@ -137,6 +145,9 @@ class Vocabulary(Sql):
 
 	def getPartialList(self,param_,theme_):
 
+		self._before = self._function
+		self._function = self._before
+		self._function = "getPartialList"
 		ret = []
 
 		self.printIf("getPartialList - allWords : "+str(self._allWords))
@@ -169,6 +180,8 @@ class Vocabulary(Sql):
 		self.printIf()
 		#	exit()
 		#exit()
+		#self._before = self._function
+		self._function = self._before
 		return ret
 
 	def getList(self):
@@ -179,6 +192,8 @@ class Vocabulary(Sql):
 
 	def getWord(self,word_,param_,theme_,isControl):
 
+		self._before = self._function
+		self._function = "getWord"
 		pQuestion = "vortarVorto_id"
 		pResponse = "vortarTraduko_id"
 
@@ -223,11 +238,18 @@ class Vocabulary(Sql):
 		aTable = "t" + self._param["learn"] + self._param["home"] +"_vortaro"
 		aDic = {"table":aTable,"select":aSelect,"where":"vortarVorto_id"+'  = "' + aWord + '"' + endRequest }
 
+		#self._before = self._function
+		self._function = self._before
+
 		return self.select(aDic,False)
 
 #-
 
 	def toPair(self,data_,theme_):
+
+		self._before = self._function
+		#self._function = self._before
+		self._function = "toPair"
 
 		self.printIf()
 		#self.printIf(data_)
@@ -261,6 +283,8 @@ class Vocabulary(Sql):
 
 		self.printIf("aQuestion : " + str(aQuestion))
 		self.printIf("aResponse : " + str(aResponse))
+		#self._before = self._function
+		self._function = self._before
 		return [aQuestion,aResponse]
 
 		#if isComplex:

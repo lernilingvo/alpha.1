@@ -14,7 +14,7 @@
 	,"eo" : { 
 		"model":[
 			{"name":"komuno","tables":["autoro","pozicio","titro","librejo"]},
-			{"name":"leo","tables":["fikso","traduko","vorto","radikejo","radikopo","vortujo"]}
+			{"name":"leo","tables":["fikso","traduko","vorto","radikejo","radikopo","vortujo","radikujo"]}
 			,{"name":"lfr","tables":["vorto"]}
 			,{"name":"teofr","tables":["vortaro"]}
 			,{"name":"logs","tables":["log","leciono","parametro"]}
@@ -23,7 +23,7 @@
 			{"name":"komuno_autoro","tables":["autoro","pozicio","titro","librejo"]}
 			,{"name":"komuno_titro","tables":["autoro","pozicio","titro","librejo"]}
 			,{"name":"komuno_librejo","tables":["autoro","pozicio","titro","librejo"]}
-			,{"name":"leo","tables":["fikso","traduko","vorto","radikejo","radikopo","vortujo"]}
+			,{"name":"leo","tables":["fikso","traduko","vorto","radikejo","radikopo","vortujo","radikujo"]}
 			,{"name":"lfr","tables":["vorto"]}
 			,{"name":"teofr","tables":["vortaro"]}
 			,{"name":"logs","tables":["log","leciono","parametro"]}
@@ -51,6 +51,8 @@
 		"radikopoPozicio_id":{"app":"komuno","table":"pozicio","field":"nomo"}
 		,"radikopoVorto_id":{"app":"learn","table":"vorto","field":"nomo"}
 		,"radikopoRadiko_id":{"app":"learn","table":"radikejo","field":"nomo"}
+		,"radikuRadiko_id":{"app":"learn","table":"radikejo","field":"nomo"}
+		,"radikuPozicio_id":{"app":"komuno","table":"pozicio","field":"nomo"}
 		,"vortuPozicio_id":{"app":"komuno","table":"pozicio","field":"nomo"}
 		,"vortuVorto_id":{"app":"learn","table":"vorto","field":"nomo"}
 		,"vortarPozicio_id":{"app":"komuno","table":"pozicio","field":"nomo"}
@@ -71,7 +73,7 @@
 			,"word_translation_ordered":
 				{"app":"translation","table":"vortaro","data":[
 					 {"position":0,"field":"vortarPozicio_id"}
-					,{"position":1,"field":"vortarVorto_id"}
+					,{"position":1,"field":"vortarVorto_id","sub":"radical_decomposition"}
 					,{"position":2,"field":"vortarTraduko_id"}
 					,{"position":3,"field":"vortarPrecizeco"}
 					,{"position":4,"field":"vortarKomento"}
@@ -83,9 +85,9 @@
 					 ,{"position":"increment","field":"radikopoPozicio_id"}
 			]}
 			,"radical_list_ordered":
-				{"app":"learn","table":"vortujo","data":[
-					 {"increment":"True","field":"vortuPozicio_id"}
-					 ,{"position":0,"field":"vortuVorto_id"}
+				{"app":"learn","table":"radikujo","data":[
+					 {"position":0,"field":"radikuRadiko_id"}
+					 ,{"position":"increment","field":"radikuPozicio_id"}
 			]}
 			,"word_list_ordered":
 				{"app":"learn","table":"vortujo","data":[

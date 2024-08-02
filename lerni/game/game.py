@@ -24,8 +24,17 @@ class Game(Sql):
 
 	def __init__(self,param_):
 
+		self._file = "game.py"
+		self._boucle = "."
+		self._function = "__init__"
+		self._param = param_
+
+		if "debug" in self._param.keys():
+			self._debug = self._param["debug"]
+
 		self._vocabulary = Vocabulary(param_)
 
+		self.printIf("--- liste :" + str(self._vocabulary.getList()))
 		for anElement in self._vocabulary.getList():
 			self.lesson(anElement["liste"],anElement["theme"])
 

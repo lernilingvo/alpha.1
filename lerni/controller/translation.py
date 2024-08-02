@@ -100,6 +100,9 @@ class Translation(Book):
 						case "word_translation_ordered"|"word_translation_minimal":
 							aColumnName = "vortarLibrejo_id"
 							self._array.append({"select":aColumnName,"value":str(self._book["bookId"])})
+						case "radical_list_ordered":
+							aColumnName = "radikuLibre_id"
+							self._array.append({"select":aColumnName,"value":str(self._book["bookId"])})
 						case "radical_decomposition":
 							pass
 						case _:
@@ -129,8 +132,8 @@ class Translation(Book):
 		xDic = {}
 		vField = desc_["field"]
 		vPosition = desc_["position"]
+		self.printIf("----+" + str(self._details))
 		vDetails = self._details[vField]
-		self.printIf("----+" + str(vDetails))
 
 
 		if vPosition in [0,1,2,3,4,5,6,7,8,9]:
